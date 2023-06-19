@@ -1,0 +1,126 @@
+/* Global styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 24px;
+}
+
+p {
+  font-size: 14px;
+}
+
+/* File upload styles */
+.upload-wrapper {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.drop-area {
+  border: 2px dashed #aaa;
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+  transition: border-color 0.3s;
+}
+
+.drop-area.highlight {
+  border-color: dodgerblue;
+}
+
+.upload-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.upload-info .clip {
+  margin-right: 10px;
+}
+
+.upload-filename {
+  display: block;
+  font-size: 16px;
+  color: #555;
+}
+
+.upload-button {
+  background-color: dodgerblue;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.upload-button:hover {
+  background-color: royalblue;
+}
+
+.upload-hint {
+  font-size: 14px;
+  color: #555;
+  margin-top: 10px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.upload-progress {
+  width: 0;
+  height: 2px;
+  background-color: dodgerblue;
+  margin-top: 10px;
+  display: none;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes progressBar {
+  from {
+    width: 0;
+  }
+}
+
+.uploading .upload-hint {
+  opacity: 1;
+}
+
+.uploading .upload-progress {
+  display: block;
+  animation: progressBar 5s linear forwards;
+}
+
+/* Media queries for responsiveness */
+@media screen and (max-width: 600px) {
+  .wrapper {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  p {
+    font-size: 12px;
+  }
+}
