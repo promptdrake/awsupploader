@@ -11,7 +11,7 @@
   "main": "index.js",
   "devDependencies": {},
   "scripts": {
-    "start": "node index.js",
+    "start": "npm i && node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
