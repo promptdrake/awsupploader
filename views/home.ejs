@@ -16,13 +16,13 @@
         <div class="card mt-5">
           <div class="card-body">
             <h5 class="card-title text-center">Image Upload Temporary</h5>
-            <p class="card-description text-center">The Image deleted after 3 day</p>
+            <p class="card-description text-center">The Image deleted after 7 day</p>
             <form action="/upload/<%= field %>" method="POST" enctype="multipart/form-data">
               <div class="mb-3">
                 <input type="file" class="form-control custom-file-input" name="file" id="file" required accept="image/*">
               </div>
               <div class="d-grid">
-                <button type="submit" class="btn btn-primary">Upload</button>
+                <button onsubmit="loading()" class="btn btn-primary" id="btns"><span id="picius" style="visibility: hidden;" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> <span id="status">Upload</span></button>
               </div>
             </form>
             <br>
@@ -35,10 +35,15 @@
                 <li><a class="dropdown-item" href="?id=poolsatu">Asia Pacific (APAC) 1</a></li>
                 <li><a class="dropdown-item" href="?id=pooldua">Asia Pacific (APAC) 2</a></li>
                 <li><a class="dropdown-item" href="?id=enamsatu">Eastern North America (ENAM) 1</a></li>
-                <li><a onclick="prems()" class="dropdown-item" href="#">Premium</a></li>
+                <li><a class="dropdown-item" href="?id=weursatu">Western Europe (WEUR) 1</a></li>
+                <li><a class="dropdown-item" href="?id=eeursatu">Eastern Europe (EEUR) 1</a></li>
+                <li><a class="dropdown-item" href="?id=wnamsatu">Western North America (WNAM) 1</a></li>
+                <li><hr></li>
+                <li><a class="dropdown-item" href="/./">Random Server</a></li>
               </ul>
             </div>
-            <p style="margin-top: 10px;">Selected: <%= field %></p>
+            <p style="margin-top: 10px;font-size: 13px;color: green;">Selected: <%= field %></p>
+            <p style="margin-top: -10px;">Please <a href="https://sociabuzz.com/aisbir_gans/donate">Donate</a> to keep our server online:(</p>
           </div>
         </div>
       </div>
@@ -46,12 +51,8 @@
   </div>
   <div class="text-center justify-content-center" style="padding-top: 10px;">
   <code>Server Hosted With 💖 By aisbircube<br>Keep Your Link Safe!</code></div>
-  <script>
-    function prems() {
-      swal("Sorry", "U need bought premium tier from aisbircubes, Premium give 7 day file remove and 14 day file remove");
-    }
-  </script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/./index.js"></script>
 </body>
 </html>
