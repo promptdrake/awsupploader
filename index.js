@@ -70,7 +70,7 @@ app.post('/upload/poolsatu', async (req, res) => {
 
     const file = req.files.file;
     if (!isImage(file)) {
-      return res.status(400).json({ error: 'Nice Try kid for inspecting element and change the accept form only image to everything, Please follow the rules' });
+      return res.status(400).json({ error: 'Sorry But this server only accepting image, Please Use other server to upload another file' });
     }
 
     const fileExtension = path.extname(file.name);
@@ -102,7 +102,7 @@ app.post('/upload/pooldua', async (req, res) => {
 
     const file = req.files.file;
     if (!isImage(file)) {
-      return res.status(400).json({ error: 'Nice Try kid for inspecting element and change the accept form only image to everything, Please follow the rules' });
+      return res.status(400).json({ error: 'Sorry But this server only accepting image, Please Use other server to upload another file' });
     }
 
     const fileExtension = path.extname(file.name);
@@ -133,10 +133,6 @@ app.post('/upload/enamsatu', async (req, res) => {
     }
 
     const file = req.files.file;
-    if (!isImage(file)) {
-      return res.status(400).json({ error: 'Nice Try kid for inspecting element and change the accept form only image to everything, Please follow the rules' });
-    }
-
     const fileExtension = path.extname(file.name);
 
     const uploadParams = {
@@ -166,7 +162,7 @@ app.post('/upload/weursatu', async (req, res) => {
 
     const file = req.files.file;
     if (!isImage(file)) {
-      return res.status(400).json({ error: 'Nice Try kid for inspecting element and change the accept form only image to everything, Please follow the rules' });
+      return res.status(400).json({ error: 'Sorry But this server only accepting image, Please Use other server to upload another file' });
     }
 
     const fileExtension = path.extname(file.name);
@@ -189,6 +185,9 @@ app.post('/upload/weursatu', async (req, res) => {
     res.status(500).json({ error: 'An error occurred while uploading the file' });
   }
 });
+app.get('/rule', (req,res) => {
+res.sendFile('rule.txt', { root: __dirname })
+});
 app.post('/upload/eeursatu', async (req, res) => {
   try {
     if (!req.files || !req.files.file) {
@@ -196,9 +195,6 @@ app.post('/upload/eeursatu', async (req, res) => {
     }
 
     const file = req.files.file;
-    if (!isImage(file)) {
-      return res.status(400).json({ error: 'Nice Try kid for inspecting element and change the accept form only image to everything, Please follow the rules' });
-    }
 
     const fileExtension = path.extname(file.name);
 
@@ -229,7 +225,7 @@ app.post('/upload/wnamsatu', async (req, res) => {
 
     const file = req.files.file;
     if (!isImage(file)) {
-      return res.status(400).json({ error: 'Nice Try kid for inspecting element and change the accept form only image to everything, Please follow the rules' });
+      return res.status(400).json({ error: 'Sorry But this server only accepting image, Please Use other server to upload another file' });
     }
 
     const fileExtension = path.extname(file.name);
