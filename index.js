@@ -1,5 +1,5 @@
 const express = require('express');
-const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
+const { S3Client, PutObjectCommand, ListObjectsCommand, HeadObjectCommand } = require('@aws-sdk/client-s3');
 const fileUpload = require('express-fileupload');
 const ejs = require('ejs')
 const path = require('path');
@@ -59,10 +59,55 @@ const s3Wnamsatu = new S3Client({
     secretAccessKey: '10b0115a4a607e1d2319d988bea61c6bc09c7634d4692cef596a6254a9e4b134'
   }
 });
+const s3Pooljsatu = new S3Client({
+  endpoint: 'https://b77a7dcddd82986a92824be5afeb159d.r2.cloudflarestorage.com/pooljsatu',
+  region: 'wnam',
+  credentials: {
+    accessKeyId: '1325545621f2903dfe3d0c5e8f121e81',
+    secretAccessKey: '080d586f1ea8956192f02fe86f5490660dd04a125442189f36a0f10c866dc944'
+  }
+});
+
+const s3privatepanel = new S3Client({
+  endpoint: 'https://b77a7dcddd82986a92824be5afeb159d.r2.cloudflarestorage.com/privatepanel',
+  region: 'apac',
+  credentials: {
+    accessKeyId: '1325545621f2903dfe3d0c5e8f121e81',
+    secretAccessKey: '080d586f1ea8956192f02fe86f5490660dd04a125442189f36a0f10c866dc944'
+  }
+});
+
+const poolprem1 = new S3Client({
+  endpoint: 'https://7c0ef63d0ac6611817af0986bc856da3.r2.cloudflarestorage.com/poolprem1',
+  region: 'apac',
+  credentials: {
+    accessKeyId: 'a1e92126e5321826a487caad9d83b92b',
+    secretAccessKey: 'e19145cdb8e89b412223b5c325d4dc844ce42f018e41c95698d01e3ec2b80ea5'
+  }
+});
+
+const poolprem2 = new S3Client({
+  endpoint: 'https://7c0ef63d0ac6611817af0986bc856da3.r2.cloudflarestorage.com/poolprem2',
+  region: 'apac',
+  credentials: {
+    accessKeyId: 'a1e92126e5321826a487caad9d83b92b',
+    secretAccessKey: 'e19145cdb8e89b412223b5c325d4dc844ce42f018e41c95698d01e3ec2b80ea5'
+  }
+});
+const poolprem3 = new S3Client({
+  endpoint: 'https://7c0ef63d0ac6611817af0986bc856da3.r2.cloudflarestorage.com/poolprem3',
+  region: 'apac',
+  credentials: {
+    accessKeyId: 'a1e92126e5321826a487caad9d83b92b',
+    secretAccessKey: 'e19145cdb8e89b412223b5c325d4dc844ce42f018e41c95698d01e3ec2b80ea5'
+  }
+});
 
 app.use(fileUpload());
 
-app.post('/upload/poolsatu', async (req, res) => {
+
+
+app.post('/upload/dd883806-edd6-43c4-8ad7-b1521d91e68a', async (req, res) => {
   try {
     if (!req.files || !req.files.file) {
       return res.status(400).json({ error: 'No file uploaded' });
@@ -94,7 +139,7 @@ app.post('/upload/poolsatu', async (req, res) => {
   }
 });
 
-app.post('/upload/pooldua', async (req, res) => {
+app.post('/upload/26dc5ac0-fb75-4a07-a066-68288680f0bb', async (req, res) => {
   try {
     if (!req.files || !req.files.file) {
       return res.status(400).json({ error: 'No file uploaded' });
@@ -126,7 +171,7 @@ app.post('/upload/pooldua', async (req, res) => {
   }
 });
 
-app.post('/upload/enamsatu', async (req, res) => {
+app.post('/upload/52bf3779-a5b3-40ff-b85a-1319c2b15f9e', async (req, res) => {
   try {
     if (!req.files || !req.files.file) {
       return res.status(400).json({ error: 'No file uploaded' });
@@ -154,7 +199,7 @@ app.post('/upload/enamsatu', async (req, res) => {
   }
 });
 
-app.post('/upload/weursatu', async (req, res) => {
+app.post('/upload/08942a23-9c49-459c-a77f-b1b1557bf0aa', async (req, res) => {
   try {
     if (!req.files || !req.files.file) {
       return res.status(400).json({ error: 'No file uploaded' });
@@ -188,7 +233,7 @@ app.post('/upload/weursatu', async (req, res) => {
 app.get('/rule', (req,res) => {
 res.sendFile('rule.txt', { root: __dirname })
 });
-app.post('/upload/eeursatu', async (req, res) => {
+app.post('/upload/1510aa1f-9958-4882-a0ff-b57cbcd2d64b', async (req, res) => {
   try {
     if (!req.files || !req.files.file) {
       return res.status(400).json({ error: 'No file uploaded' });
@@ -216,8 +261,39 @@ app.post('/upload/eeursatu', async (req, res) => {
     res.status(500).json({ error: 'An error occurred while uploading the file' });
   }
 });
+app.post('/upload/a82e8ca7-6725-47c2-acac-09181e3c2074', async (req, res) => {
+  try {
+    if (!req.files || !req.files.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
 
-app.post('/upload/wnamsatu', async (req, res) => {
+    const file = req.files.file;
+    if (!ishtml(file)) {
+      return res.status(400).json({ error: 'Your File detected as Not Web Host, Please Use Another server' });
+    }
+
+    const fileExtension = path.extname(file.name);
+
+    const uploadParams = {
+      Bucket: 'pooljsatu',
+      Key: `jsfile-${Date.now().toString()}${fileExtension}`,
+      Body: file.data,
+      ACL: 'public-read',
+      ContentType: file.mimetype
+    };
+
+    const putObjectCommand = new PutObjectCommand(uploadParams);
+    await s3Pooljsatu.send(putObjectCommand);
+
+    const fileUrl = `https://pub-479fc6dbe0544cb19cb72879fc05c872.r2.dev/pooljsatu/${uploadParams.Key}`;
+    res.redirect(fileUrl);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while uploading the file' });
+  }
+});
+
+app.post('/upload/2ef28319-8e80-4eec-87b7-7b03d788008e', async (req, res) => {
   try {
     if (!req.files || !req.files.file) {
       return res.status(400).json({ error: 'No file uploaded' });
@@ -248,6 +324,139 @@ app.post('/upload/wnamsatu', async (req, res) => {
     res.status(500).json({ error: 'An error occurred while uploading the file' });
   }
 });
+app.post('/upload/39c8f341-f903-492b-8841-18e5a35505d8', async (req, res) => {
+  try {
+    if (!req.files || !req.files.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    const file = req.files.file;
+
+    const fileExtension = path.extname(file.name);
+    const filename = path.basename(file.name)
+    const currentDate = new Date();
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+    const uploadParams = {
+      Bucket: 'privatepanel',
+      Key: `${day}-${month}-${year}/${filename}`,
+      Body: file.data,
+      ACL: 'public-read',
+      ContentType: file.mimetype
+    };
+
+    const putObjectCommand = new PutObjectCommand(uploadParams);
+    await s3privatepanel.send(putObjectCommand);
+
+    const fileUrl = `https://pub-efb1db90550941b7a797838b273e0e34.r2.dev/privatepanel/${uploadParams.Key}`;
+    res.redirect(fileUrl);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while uploading the file' });
+  }
+});
+app.post('/upload/b6146c8f-5421-4ca8-b77f-5e916fc9c4d8', async (req, res) => {
+  try {
+    if (!req.files || !req.files.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    const file = req.files.file;
+
+    const fileExtension = path.extname(file.name);
+    const filename = path.basename(file.name)
+    const currentDate = new Date();
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+    const uploadParams = {
+      Bucket: 'poolprem1',
+      Key: `${day}-${month}-${year}/${filename}`,
+      Body: file.data,
+      ACL: 'public-read',
+      ContentType: file.mimetype
+    };
+
+    const putObjectCommand = new PutObjectCommand(uploadParams);
+    await poolprem1.send(putObjectCommand);
+
+    const fileUrl = `https://pub-eef62aa888bf4e2ba5868f47ab4e2aee.r2.dev/poolprem1/${uploadParams.Key}`;
+    res.redirect(fileUrl);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while uploading the file' });
+  }
+});
+app.post('/upload/3f1652a8-8100-44a5-abaf-b3601fe9e1c4', async (req, res) => {
+  try {
+    if (!req.files || !req.files.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    const file = req.files.file;
+
+    const fileExtension = path.extname(file.name);
+    const filename = path.basename(file.name)
+    const currentDate = new Date();
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+    const uploadParams = {
+      Bucket: 'poolprem2',
+      Key: `${day}-${month}-${year}/${filename}`,
+      Body: file.data,
+      ACL: 'public-read',
+      ContentType: file.mimetype
+    };
+
+    const putObjectCommand = new PutObjectCommand(uploadParams);
+    await poolprem2.send(putObjectCommand);
+
+    const fileUrl = `https://pub-eb297788864f4d23b5a0d36d67b96074.r2.dev/poolprem2/${uploadParams.Key}`;
+    res.redirect(fileUrl);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while uploading the file' });
+  }
+});
+app.post('/upload/77868324-f071-4d15-af58-6619988865cf', async (req, res) => {
+  try {
+    if (!req.files || !req.files.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    const file = req.files.file;
+
+    const fileExtension = path.extname(file.name);
+    const filename = path.basename(file.name)
+    const currentDate = new Date();
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+    const uploadParams = {
+      Bucket: 'poolprem3',
+      Key: `${day}-${month}-${year}/${filename}`,
+      Body: file.data,
+      ACL: 'public-read',
+      ContentType: file.mimetype
+    };
+
+    const putObjectCommand = new PutObjectCommand(uploadParams);
+    await poolprem3.send(putObjectCommand);
+
+    const fileUrl = `https://pub-c932e375ce524b409e3ea3b04ff5906a.r2.dev/poolprem3/${uploadParams.Key}`;
+    res.redirect(fileUrl);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while uploading the file' });
+  }
+});
+
+function ishtml(file) {
+  const allowedMimetypes = ['text/html', 'text/css', 'application/javascript', 'text/plain', 'text/html', 'text/plain']; // Add more allowed mimetypes if needed
+  return allowedMimetypes.includes(file.mimetype);
+}
 
 function isImage(file) {
   return file.mimetype.startsWith('image/');
@@ -263,7 +472,14 @@ app.get('/', (req, res) => {
   }
 });
 function getRandomOption() {
-  const options = ['poolsatu', 'pooldua', 'enamsatu', 'weursatu', 'eeursatu', 'wnamsatu'];
+  const options = [
+    'dd883806-edd6-43c4-8ad7-b1521d91e68a',
+    '26dc5ac0-fb75-4a07-a066-68288680f0bb', 
+    'a82e8ca7-6725-47c2-acac-09181e3c2074', 
+    '52bf3779-a5b3-40ff-b85a-1319c2b15f9e', 
+    '08942a23-9c49-459c-a77f-b1b1557bf0aa', 
+    '1510aa1f-9958-4882-a0ff-b57cbcd2d64b'
+  ];
   const randomIndex = Math.floor(Math.random() * options.length);
   return options[randomIndex];
 }

@@ -8,6 +8,7 @@
       cursor: pointer;
     }
   </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
   <div class="container">
@@ -15,8 +16,8 @@
       <div class="col-lg-6">
         <div class="card mt-5">
           <div class="card-body">
-            <h5 class="card-title text-center">File Upload Temporary</h5>
-            <p class="card-description text-center">The File deleted after 7 day<br>press ctrl+v to paste screenshot</p>
+            <h5 class="card-title text-center">File Upload</h5>
+            <p class="card-description text-center">Upload Your random file here<br>press ctrl+v to paste screenshot</p>
             <form action="/upload/<%= field %>" id="formupload" method="POST" enctype="multipart/form-data">
               <div class="mb-3">
                 <input type="file" class="form-control custom-file-input" name="file" id="file" required>
@@ -26,22 +27,38 @@
               </div>
             </form>
             <br>
-            <div class="dropdown">
-              <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Server
-              </a>
-            
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="?id=poolsatu">Asia Pacific (APAC) 1</a></li>
-                <li><a class="dropdown-item" href="?id=pooldua">Asia Pacific (APAC) 2</a></li>
-                <li><a class="dropdown-item" href="?id=enamsatu">Eastern North America (ENAM) (All File Supported) 1</a></li>
-                <li><a class="dropdown-item" href="?id=weursatu">Western Europe (WEUR) 1</a></li>
-                <li><a class="dropdown-item" href="?id=eeursatu">Eastern Europe (EEUR) (All File Supported) 1</a></li>
-                <li><a class="dropdown-item" href="?id=wnamsatu">Western North America (WNAM) 1</a></li>
-                <li><hr></li>
-                <li><a class="dropdown-item" href="/./">Random Server</a></li>
-              </ul>
-            </div>
+            <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Server Selector
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Select Server</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Report to staff if some server is down<br>Please Don't spamming for uploading file</p>
+        <ul style="max-height: 300px;overflow-y: auto;word-wrap: break-word;">
+          <li><a>Asia Pacific (APAC) (Image File) (7 Day Expired) <br><code>dd883806-edd6-43c4-8ad7-b1521d91e68a</code><br><a class="btn btn-primary btn-sm" href="?id=dd883806-edd6-43c4-8ad7-b1521d91e68a" role="button"><i class="fa-solid fa-server"></i> Connect</a></a></li>
+          <li style="padding-top: 10px;"><a>Asia Pacific (APAC) (Image File) (7 Day Expired)<br><code>26dc5ac0-fb75-4a07-a066-68288680f0bb</code><br><a class="btn btn-primary btn-sm" href="?id=26dc5ac0-fb75-4a07-a066-68288680f0bb" role="button"><i class="fa-solid fa-server"></i> Connect</a></a></li>
+          <li style="padding-top: 10px;"><a>Asia Pacific (APAC) (Web Host File) (No Expired) <br><code>a82e8ca7-6725-47c2-acac-09181e3c2074</code><br><a class="btn btn-primary btn-sm" href="?id=a82e8ca7-6725-47c2-acac-09181e3c2074" role="button"><i class="fa-solid fa-server"></i> Connect</a></a></li>
+          <li style="padding-top: 10px;"><a>Eastern North America (ENAM) (All File) (7 Day Expired)<br><code>52bf3779-a5b3-40ff-b85a-1319c2b15f9e</code><br><a class="btn btn-primary btn-sm" href="?id=52bf3779-a5b3-40ff-b85a-1319c2b15f9e" role="button"><i class="fa-solid fa-server"></i> Connect</a></a></li>
+          <li style="padding-top: 10px;"><a>Western Europe (WEUR) (Image File) (7 Day Expired)<br><code>08942a23-9c49-459c-a77f-b1b1557bf0aa</code><br><a class="btn btn-primary btn-sm" href="?id=08942a23-9c49-459c-a77f-b1b1557bf0aa" role="button"><i class="fa-solid fa-server"></i> Connect</a></a></li>
+          <li style="padding-top: 10px;"><a>Eastern Europe (EEUR) (All File Supported) (7 Day Expired)<br><code>1510aa1f-9958-4882-a0ff-b57cbcd2d64b</code><br><a class="btn btn-primary btn-sm" href="?id=1510aa1f-9958-4882-a0ff-b57cbcd2d64b" role="button"><i class="fa-solid fa-server"></i> Connect</a></a></li>
+          <li style="padding-top: 10px;"><a>Western North America (WNAM) (Image File) (7 Day Expired)<br><code>2ef28319-8e80-4eec-87b7-7b03d788008e</code><br><a class="btn btn-primary btn-sm" href="?id=2ef28319-8e80-4eec-87b7-7b03d788008e" role="button"><i class="fa-solid fa-server"></i> Connect</a></a></li>
+        </ul>
+        <p>Need Private Storage, No expired Storage and have pool domain custom for your website?<br>Contact me at <a href="https://discord.aisbircubes.my.id">Discord</a></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
             <p style="margin-top: 10px;font-size: 13px;color: green;">Selected: <%= field %></p>
             <p style="margin-top: -10px;">Please <a href="https://sociabuzz.com/aisbir_gans/donate">Donate</a> to keep our server online:( <br>Read <a href="/rule">rule</a> for important information</p>
           </div>
