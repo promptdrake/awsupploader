@@ -102,12 +102,36 @@ const poolprem3 = new S3Client({
     secretAccessKey: 'e19145cdb8e89b412223b5c325d4dc844ce42f018e41c95698d01e3ec2b80ea5'
   }
 });
+const prem3 = new S3Client({
+  endpoint: 'https://54f52dda40d078fe87ff689db1d5e5ff.r2.cloudflarestorage.com/premium3',
+  region: 'apac',
+  credentials: {
+    accessKeyId: 'a01d96cf5697e6106093943095f7657c',
+    secretAccessKey: 'c06b351420bfed5916ead55017453411e346406500b6c4225af3bde243a13f4b'
+  }
+});
+const prem4 = new S3Client({
+  endpoint: 'https://54f52dda40d078fe87ff689db1d5e5ff.r2.cloudflarestorage.com/premium4',
+  region: 'apac',
+  credentials: {
+    accessKeyId: 'a01d96cf5697e6106093943095f7657c',
+    secretAccessKey: 'c06b351420bfed5916ead55017453411e346406500b6c4225af3bde243a13f4b'
+  }
+});
+const prem5 = new S3Client({
+  endpoint: 'https://54f52dda40d078fe87ff689db1d5e5ff.r2.cloudflarestorage.com/premium5',
+  region: 'apac',
+  credentials: {
+    accessKeyId: 'a01d96cf5697e6106093943095f7657c',
+    secretAccessKey: 'c06b351420bfed5916ead55017453411e346406500b6c4225af3bde243a13f4b'
+  }
+});
 
 app.use(fileUpload());
 
 
 
-app.post('/upload/dd883806-edd6-43c4-8ad7-b1521d91e68a', async (req, res) => {
+app.post('/upload/dd883806-edd6-43c4-8ad7-b1521d91e68a/:action', async (req, res) => {
   try {
     if (!req.files || !req.files.file) {
       return res.status(400).json({ error: 'No file uploaded' });
@@ -132,14 +156,19 @@ app.post('/upload/dd883806-edd6-43c4-8ad7-b1521d91e68a', async (req, res) => {
     await s3Poolsatu.send(putObjectCommand);
 
     const fileUrl = `https://pub-73c7b84f78124062aec73ec8773d043a.r2.dev/poolsatu/${uploadParams.Key}`;
-    res.redirect(fileUrl);
+    if(req.params.action === "json") {
+      res.status(200).json({ url: fileUrl, status: "OK" });
+    }
+    else {
+      res.redirect(fileUrl);
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while uploading the file' });
   }
 });
 
-app.post('/upload/26dc5ac0-fb75-4a07-a066-68288680f0bb', async (req, res) => {
+app.post('/upload/26dc5ac0-fb75-4a07-a066-68288680f0bb/:action', async (req, res) => {
   try {
     if (!req.files || !req.files.file) {
       return res.status(400).json({ error: 'No file uploaded' });
@@ -164,14 +193,19 @@ app.post('/upload/26dc5ac0-fb75-4a07-a066-68288680f0bb', async (req, res) => {
     await s3Pooldua.send(putObjectCommand);
 
     const fileUrl = `https://pub-318a5b7967614a2d894129bc59f92c8b.r2.dev/poolduas/${uploadParams.Key}`;
-    res.redirect(fileUrl);
+    if(req.params.action === "json") {
+      res.status(200).json({ url: fileUrl, status: "OK" });
+    }
+    else {
+      res.redirect(fileUrl);
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while uploading the file' });
   }
 });
 
-app.post('/upload/52bf3779-a5b3-40ff-b85a-1319c2b15f9e', async (req, res) => {
+app.post('/upload/52bf3779-a5b3-40ff-b85a-1319c2b15f9e/:action', async (req, res) => {
   try {
     if (!req.files || !req.files.file) {
       return res.status(400).json({ error: 'No file uploaded' });
@@ -192,14 +226,19 @@ app.post('/upload/52bf3779-a5b3-40ff-b85a-1319c2b15f9e', async (req, res) => {
     await s3Poolenamsatu.send(putObjectCommand);
 
     const fileUrl = `https://pub-2bd6d2ee6db14f36ada268763e8850a4.r2.dev/poolamrik1/${uploadParams.Key}`;
-    res.redirect(fileUrl);
+    if(req.params.action === "json") {
+      res.status(200).json({ url: fileUrl, status: "OK" });
+    }
+    else {
+      res.redirect(fileUrl);
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while uploading the file' });
   }
 });
 
-app.post('/upload/08942a23-9c49-459c-a77f-b1b1557bf0aa', async (req, res) => {
+app.post('/upload/08942a23-9c49-459c-a77f-b1b1557bf0aa/:action', async (req, res) => {
   try {
     if (!req.files || !req.files.file) {
       return res.status(400).json({ error: 'No file uploaded' });
@@ -224,7 +263,12 @@ app.post('/upload/08942a23-9c49-459c-a77f-b1b1557bf0aa', async (req, res) => {
     await s3Poolwestern1.send(putObjectCommand);
 
     const fileUrl = `https://pub-a368c17f5c404d088a8cf253d09c0cbe.r2.dev/poolwestern1/${uploadParams.Key}`;
-    res.redirect(fileUrl);
+    if(req.params.action === "json") {
+      res.status(200).json({ url: fileUrl, status: "OK" });
+    }
+    else {
+      res.redirect(fileUrl);
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while uploading the file' });
@@ -233,7 +277,7 @@ app.post('/upload/08942a23-9c49-459c-a77f-b1b1557bf0aa', async (req, res) => {
 app.get('/rule', (req,res) => {
 res.sendFile('rule.txt', { root: __dirname })
 });
-app.post('/upload/1510aa1f-9958-4882-a0ff-b57cbcd2d64b', async (req, res) => {
+app.post('/upload/1510aa1f-9958-4882-a0ff-b57cbcd2d64b/:action', async (req, res) => {
   try {
     if (!req.files || !req.files.file) {
       return res.status(400).json({ error: 'No file uploaded' });
@@ -255,13 +299,18 @@ app.post('/upload/1510aa1f-9958-4882-a0ff-b57cbcd2d64b', async (req, res) => {
     await s3Pooleeur1.send(putObjectCommand);
 
     const fileUrl = `https://pub-5cdfd4d7774e49aa99f6878c6ebe8db9.r2.dev/eeursatu/${uploadParams.Key}`;
-    res.redirect(fileUrl);
+    if(req.params.action === "json") {
+      res.status(200).json({ url: fileUrl, status: "OK" });
+    }
+    else {
+      res.redirect(fileUrl);
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while uploading the file' });
   }
 });
-app.post('/upload/a82e8ca7-6725-47c2-acac-09181e3c2074', async (req, res) => {
+app.post('/upload/a82e8ca7-6725-47c2-acac-09181e3c2074/:action', async (req, res) => {
   try {
     if (!req.files || !req.files.file) {
       return res.status(400).json({ error: 'No file uploaded' });
@@ -286,14 +335,19 @@ app.post('/upload/a82e8ca7-6725-47c2-acac-09181e3c2074', async (req, res) => {
     await s3Pooljsatu.send(putObjectCommand);
 
     const fileUrl = `https://pub-479fc6dbe0544cb19cb72879fc05c872.r2.dev/pooljsatu/${uploadParams.Key}`;
-    res.redirect(fileUrl);
+    if(req.params.action === "json") {
+      res.status(200).json({ url: fileUrl, status: "OK" });
+    }
+    else {
+      res.redirect(fileUrl);
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while uploading the file' });
   }
 });
 
-app.post('/upload/2ef28319-8e80-4eec-87b7-7b03d788008e', async (req, res) => {
+app.post('/upload/2ef28319-8e80-4eec-87b7-7b03d788008e/:action', async (req, res) => {
   try {
     if (!req.files || !req.files.file) {
       return res.status(400).json({ error: 'No file uploaded' });
@@ -318,13 +372,18 @@ app.post('/upload/2ef28319-8e80-4eec-87b7-7b03d788008e', async (req, res) => {
     await s3Wnamsatu.send(putObjectCommand);
 
     const fileUrl = `https://pub-f103919a71a647deb68deeec70f967c3.r2.dev/poolwnamsatu/${uploadParams.Key}`;
-    res.redirect(fileUrl);
+    if(req.params.action === "json") {
+      res.status(200).json({ url: fileUrl, status: "OK" });
+    }
+    else {
+      res.redirect(fileUrl);
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while uploading the file' });
   }
 });
-app.post('/upload/39c8f341-f903-492b-8841-18e5a35505d8', async (req, res) => {
+app.post('/upload/39c8f341-f903-492b-8841-18e5a35505d8/:action', async (req, res) => {
   try {
     if (!req.files || !req.files.file) {
       return res.status(400).json({ error: 'No file uploaded' });
@@ -350,13 +409,18 @@ app.post('/upload/39c8f341-f903-492b-8841-18e5a35505d8', async (req, res) => {
     await s3privatepanel.send(putObjectCommand);
 
     const fileUrl = `https://pub-efb1db90550941b7a797838b273e0e34.r2.dev/privatepanel/${uploadParams.Key}`;
-    res.redirect(fileUrl);
+    if(req.params.action === "json") {
+      res.status(200).json({ url: fileUrl, status: "OK" });
+    }
+    else {
+      res.redirect(fileUrl);
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while uploading the file' });
   }
 });
-app.post('/upload/b6146c8f-5421-4ca8-b77f-5e916fc9c4d8', async (req, res) => {
+app.post('/upload/b6146c8f-5421-4ca8-b77f-5e916fc9c4d8/:action', async (req, res) => {
   try {
     if (!req.files || !req.files.file) {
       return res.status(400).json({ error: 'No file uploaded' });
@@ -382,13 +446,18 @@ app.post('/upload/b6146c8f-5421-4ca8-b77f-5e916fc9c4d8', async (req, res) => {
     await poolprem1.send(putObjectCommand);
 
     const fileUrl = `https://pub-eef62aa888bf4e2ba5868f47ab4e2aee.r2.dev/poolprem1/${uploadParams.Key}`;
-    res.redirect(fileUrl);
+    if(req.params.action === "json") {
+      res.status(200).json({ url: fileUrl, status: "OK" });
+    }
+    else {
+      res.redirect(fileUrl);
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while uploading the file' });
   }
 });
-app.post('/upload/3f1652a8-8100-44a5-abaf-b3601fe9e1c4', async (req, res) => {
+app.post('/upload/3f1652a8-8100-44a5-abaf-b3601fe9e1c4/:action', async (req, res) => {
   try {
     if (!req.files || !req.files.file) {
       return res.status(400).json({ error: 'No file uploaded' });
@@ -414,13 +483,18 @@ app.post('/upload/3f1652a8-8100-44a5-abaf-b3601fe9e1c4', async (req, res) => {
     await poolprem2.send(putObjectCommand);
 
     const fileUrl = `https://pub-eb297788864f4d23b5a0d36d67b96074.r2.dev/poolprem2/${uploadParams.Key}`;
-    res.redirect(fileUrl);
+    if(req.params.action === "json") {
+      res.status(200).json({ url: fileUrl, status: "OK" });
+    }
+    else {
+      res.redirect(fileUrl);
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while uploading the file' });
   }
 });
-app.post('/upload/77868324-f071-4d15-af58-6619988865cf', async (req, res) => {
+app.post('/upload/77868324-f071-4d15-af58-6619988865cf/:action', async (req, res) => {
   try {
     if (!req.files || !req.files.file) {
       return res.status(400).json({ error: 'No file uploaded' });
@@ -446,7 +520,123 @@ app.post('/upload/77868324-f071-4d15-af58-6619988865cf', async (req, res) => {
     await poolprem3.send(putObjectCommand);
 
     const fileUrl = `https://pub-c932e375ce524b409e3ea3b04ff5906a.r2.dev/poolprem3/${uploadParams.Key}`;
-    res.redirect(fileUrl);
+    if(req.params.action === "json") {
+      res.status(200).json({ url: fileUrl, status: "OK" });
+    }
+    else {
+      res.redirect(fileUrl);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while uploading the file' });
+  }
+});
+app.post('/upload/1a8763aa-0cde-4881-9145-127656332571/:action', async (req, res) => {
+  try {
+    if (!req.files || !req.files.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    const file = req.files.file;
+
+    const fileExtension = path.extname(file.name);
+    const filename = path.basename(file.name)
+    const currentDate = new Date();
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+    const uploadParams = {
+      Bucket: 'premium3',
+      Key: `${day}-${month}-${year}/${filename}`,
+      Body: file.data,
+      ACL: 'public-read',
+      ContentType: file.mimetype
+    };
+
+    const putObjectCommand = new PutObjectCommand(uploadParams);
+    await prem3.send(putObjectCommand);
+
+    const fileUrl = `https://pub-c690c73d91044c499332520acaa8b267.r2.dev/premium3/${uploadParams.Key}`;
+    if(req.params.action === "json") {
+      res.status(200).json({ url: fileUrl, status: "OK" });
+    }
+    else {
+      res.redirect(fileUrl);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while uploading the file' });
+  }
+});
+app.post('/upload/b48979ee-c069-4494-bc04-513402ca7a4a/:action', async (req, res) => {
+  try {
+    if (!req.files || !req.files.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    const file = req.files.file;
+
+    const fileExtension = path.extname(file.name);
+    const filename = path.basename(file.name)
+    const currentDate = new Date();
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+    const uploadParams = {
+      Bucket: 'premium4',
+      Key: `${day}-${month}-${year}/${filename}`,
+      Body: file.data,
+      ACL: 'public-read',
+      ContentType: file.mimetype
+    };
+
+    const putObjectCommand = new PutObjectCommand(uploadParams);
+    await prem4.send(putObjectCommand);
+
+    const fileUrl = `https://pub-9d13f6a7b9bc4d39aa3ebca02cbe088a.r2.dev/premium4/${uploadParams.Key}`;
+    if(req.params.action === "json") {
+      res.status(200).json({ url: fileUrl, status: "OK" });
+    }
+    else {
+      res.redirect(fileUrl);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while uploading the file' });
+  }
+});
+app.post('/upload/e4d1d5f1-620c-4d64-baaf-bcbd00510d99/:action', async (req, res) => {
+  try {
+    if (!req.files || !req.files.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    const file = req.files.file;
+
+    const fileExtension = path.extname(file.name);
+    const filename = path.basename(file.name)
+    const currentDate = new Date();
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+    const uploadParams = {
+      Bucket: 'premium5',
+      Key: `${day}-${month}-${year}/${filename}`,
+      Body: file.data,
+      ACL: 'public-read',
+      ContentType: file.mimetype
+    };
+
+    const putObjectCommand = new PutObjectCommand(uploadParams);
+    await prem5.send(putObjectCommand);
+
+    const fileUrl = `https://pub-187d80d06af848a3919cc61817700f80.r2.dev/premium5/${uploadParams.Key}`;
+    if(req.params.action === "json") {
+      res.status(200).json({ url: fileUrl, status: "OK" });
+    }
+    else {
+      res.redirect(fileUrl);
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while uploading the file' });
